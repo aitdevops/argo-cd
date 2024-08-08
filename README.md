@@ -17,7 +17,7 @@ Welcome to the repository for setting up ArgoCD on Google Kubernetes Engine (GKE
 
 2. **Apply ArgoCD Manifests**:
     ```sh
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.7.2/manifests/install.yaml
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
     ```
 
 3. **Patch Service Type to LoadBalancer**:
