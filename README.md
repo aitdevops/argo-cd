@@ -104,5 +104,5 @@ Happy deploying with ArgoCD on GKE! 🚀
 ---
 
 ### Note:
-- Ensure to replace `your-email@example.com` with your actual email address in the ClusterIssuer configuration.
+- Ensure to replace `rajeevkoppisetti21@gmail.com` with your actual email address in the ClusterIssuer configuration.
 - The instructions assume that Helm and kubectl are installed and configured to interact with your GKE cluster.
