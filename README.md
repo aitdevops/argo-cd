@@ -1,4 +1,4 @@
-# 🚀 ArgoCD Setup for GKE
+# 🚀 ArgoCD Setup for aitdevops-site
 
 Welcome to the repository for setting up ArgoCD on Google Kubernetes Engine (GKE). This guide will help you install ArgoCD, configure it with a LoadBalancer, and retrieve the admin password. Follow the steps below to get started!
 
