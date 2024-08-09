@@ -1,3 +1,9 @@
-ingress:
-  enabled: true
-  host: aitdevops.com  # Replace with your actual domain name
+controller:
+  service:
+    type: LoadBalancer
+    annotations:
+      cloud.google.com/neg: '{"ingress": true}'
+  admissionWebhooks:
+    enabled: true
+    patch:
+      enabled: true
