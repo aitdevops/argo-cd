@@ -1,0 +1,4 @@
+image:
+  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/backend
+  tag: 1070a3a
+  
