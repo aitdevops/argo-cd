@@ -1,4 +1,12 @@
 image:
-  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/backend
+  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/approval
+  tag: 1070a3a
+  
+image:
+  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth
+  tag: 1070a3a
+  
+image:
+  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user
   tag: 1070a3a
   
