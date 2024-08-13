@@ -1,0 +1,18 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: approval-service-app
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://github.com/aitdevops/argocd.git'
+    targetRevision: backend
+    path: charts/approval-service
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: backend
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true

@@ -1,0 +1,5 @@
+apiVersion: v2
+name: approval-service
+description: A Helm chart for deploying the approval-service microservice
+version: 0.1.0
+appVersion: "1.0"
