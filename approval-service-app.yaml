@@ -7,11 +7,11 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/aitdevops/argocd.git'
-    targetRevision: backend
+    targetRevision: main
     path: charts/approval-service
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: backend
+    namespace: default
   syncPolicy:
     automated:
       prune: true
