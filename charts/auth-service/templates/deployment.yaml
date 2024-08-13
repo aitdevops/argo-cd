@@ -5,7 +5,7 @@ metadata:
   labels:
     {{- include "backend.labels" . | nindent 4 }}
 spec:
-  replicas: 1
+  replicas: 2
   selector:
     matchLabels:
       app.kubernetes.io/instance: {{ .Release.Name }}
