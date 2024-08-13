@@ -4,7 +4,7 @@ image:
   
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth
-  tag: 1070a3a
+  tag: 2a8e5ed-auth
   
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user
