@@ -1,3 +1,3 @@
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth-service
-  tag: 3868634-auth
+  tag: 83134ac-auth-1723576679
