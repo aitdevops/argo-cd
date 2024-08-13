@@ -8,5 +8,5 @@ image:
   
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user
-  tag: 1070a3a
+  tag: 2a8e5ed-user
   
