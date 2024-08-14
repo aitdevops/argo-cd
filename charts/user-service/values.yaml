@@ -1,3 +1,3 @@
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user-service
-  tag: 8e139a1234f3dfa93234dca8245127f87bfe33d4-user
+  tag: 90bfcac90f9afacc00d7a5d801101a5bd89913b0-user
