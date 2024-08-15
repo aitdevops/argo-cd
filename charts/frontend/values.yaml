@@ -1,6 +1,6 @@
 image:
   repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend
-  tag: 9a1b01e5bb35f65dc23a127f293525a1dbe3444a
+  tag: 343ba74222dd8958c3dfee9137256d2117c50d35
   
 ingress:
   host: "aitdevops.com"
