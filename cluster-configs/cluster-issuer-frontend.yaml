@@ -1,13 +1,14 @@
+# Frontend ClusterIssuer
 apiVersion: cert-manager.io/v1
 kind: ClusterIssuer
 metadata:
-  name: letsencrypt-backend
+  name: letsencrypt-frontend
 spec:
   acme:
     server: https://acme-v02.api.letsencrypt.org/directory
     email: rajeevkoppisetti21@gmail.com  # Replace with your email
     privateKeySecretRef:
-      name: letsencrypt-prod
+      name: letsencrypt-frontend-prod
     solvers:
     - http01:
         ingress:
