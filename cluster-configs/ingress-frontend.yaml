@@ -9,10 +9,10 @@ metadata:
 spec:
   tls:
   - hosts:
-    - frontend.aitdevops.com
+    - aitdevops.com
     secretName: frontend-tls
   rules:
-  - host: frontend.aitdevops.com
+  - host: aitdevops.com
     http:
       paths:
       - path: /
