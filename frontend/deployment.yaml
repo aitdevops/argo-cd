@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: aitdevops-site
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend:06e49ff7b1f817f9071645311759391717b23512"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend:5ab2c2a1cbd98acb9563221fbccbae1b77cb16f9"
           ports:
             - containerPort: 80
           livenessProbe:
