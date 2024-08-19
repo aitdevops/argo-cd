@@ -27,6 +27,7 @@ spec:
             name: auth-service
             port:
               number: 3001
+          namespace: backend
   - host: user.aitdevops.com
     http:
       paths:
@@ -37,6 +38,7 @@ spec:
             name: user-service
             port:
               number: 3002
+          namespace: backend
   - host: approval.aitdevops.com
     http:
       paths:
@@ -47,3 +49,4 @@ spec:
             name: approval-service
             port:
               number: 3003
+          namespace: backend
