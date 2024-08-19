@@ -2,6 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: approval-service
+  namespace: backend
   labels:
     app.kubernetes.io/name: approval-service
     app.kubernetes.io/instance: approval-service-instance
