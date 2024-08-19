@@ -24,7 +24,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: auth-service-app-auth-service
+            name: auth-service
             port:
               number: 3001
   - host: user.aitdevops.com
@@ -34,7 +34,7 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: user-service-app-user-service
+            name: user-service
             port:
               number: 3002
   - host: approval.aitdevops.com
@@ -44,6 +44,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: approval-service-app-approval-service
+            name: approval-service
             port:
               number: 3003

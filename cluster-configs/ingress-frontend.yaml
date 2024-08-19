@@ -19,6 +19,6 @@ spec:
         pathType: Prefix
         backend:
           service:
-            name: frontend-service-app-frontend-service
+            name: aitdevops-site
             port:
               number: 80
