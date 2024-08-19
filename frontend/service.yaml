@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: aitdevops-site
+  labels:
+    app.kubernetes.io/name: aitdevops-site
+    app.kubernetes.io/instance: aitdevops-site-instance
+    app.kubernetes.io/version: "1.0"
+spec:
+  type: LoadBalancer
+  ports:
+    - port: 80
+      targetPort: 80
+      protocol: TCP
+      name: http
+  selector:
+    app.kubernetes.io/instance: aitdevops-site-instance
+    app.kubernetes.io/name: aitdevops-site

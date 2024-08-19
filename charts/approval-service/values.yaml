@@ -1,3 +1,0 @@
-image:
-  repository: us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/approval-service
-  tag: ec508177d695da4d2ce580982f386bbdd1d6055c-approval

@@ -1,24 +1,26 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ include "aitdevops-site.fullname" . }}
+  name: aitdevops-site
   labels:
-    {{- include "aitdevops-site.labels" . | nindent 4 }}
+    app.kubernetes.io/name: aitdevops-site
+    app.kubernetes.io/instance: aitdevops-site-instance
+    app.kubernetes.io/version: "1.0"
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/instance: {{ .Release.Name }}
-      app.kubernetes.io/name: {{ .Chart.Name }}
+      app.kubernetes.io/instance: aitdevops-site-instance
+      app.kubernetes.io/name: aitdevops-site
   template:
     metadata:
       labels:
-        app.kubernetes.io/instance: {{ .Release.Name }}
-        app.kubernetes.io/name: {{ .Chart.Name }}
+        app.kubernetes.io/instance: aitdevops-site-instance
+        app.kubernetes.io/name: aitdevops-site
     spec:
       containers:
-        - name: {{ .Chart.Name }}
-          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+        - name: aitdevops-site
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/aitdevops-site:latest"
           ports:
             - containerPort: 80
           livenessProbe:
@@ -33,4 +35,3 @@ spec:
               port: 80
             initialDelaySeconds: 30
             timeoutSeconds: 5
-
