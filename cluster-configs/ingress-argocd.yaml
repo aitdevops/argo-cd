@@ -4,13 +4,14 @@ metadata:
   name: argocd-ingress
   namespace: argocd
   annotations:
-    kubernetes.io/ingress.class: nginx
-    cert-manager.io/cluster-issuer: letsencrypt-argocd
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/cluster-issuer: letsencrypt-argocd  # Replace with your ClusterIssuer name
+    kubernetes.io/ingress.class: nginx  # Specify the ingress controller
 spec:
   tls:
   - hosts:
     - argocd.aitdevops.com
-    secretName: argocd-tls
+    secretName: argocd-tls  # The secret where the certificate will be stored
   rules:
   - host: argocd.aitdevops.com
     http:
