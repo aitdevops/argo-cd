@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user-service:latest"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/user-service:d7bee274c5a0446a71ff642786f67e8188f35a54-user"
           ports:
             - containerPort: 3002
           livenessProbe:
