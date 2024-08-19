@@ -11,8 +11,12 @@ metadata:
     nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+      - argocd.aitdevops.com  # Replace with your domain
+    secretName: argocd.aitdevops.com.tls  # This should match the secret name used by ArgoCD
   rules:
-  - host: argocd.aitdevops.com # Replace with your domain
+  - host: argocd.aitdevops.com  # Replace with your domain
     http:
       paths:
       - path: /
@@ -22,7 +26,3 @@ spec:
             name: argocd-server
             port:
               name: https
-  tls:
-  - hosts:
-    - argocd.aitdevops.com # Replace with your domain
-    secretName: argocd.aitdevops.com.tls # This should match the secret name used by ArgoCD

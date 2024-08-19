@@ -5,16 +5,16 @@ metadata:
   namespace: backend
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-backend
-    kubernetes.io/ingress.class: nginx
-    nginx.ingress.kubernetes.io/proxy-body-size: 10m
-    nginx.ingress.kubernetes.io/rewrite-target: /
-    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    cert-manager.io/acme-challenge-type: http01
+    nginx.ingress.kubernetes.io/ssl-passthrough: "true"
+    nginx.ingress.kubernetes.io/backend-protocol: "HTTPS"
 spec:
+  ingressClassName: nginx
   tls:
   - hosts:
-    - auth.aitdevops.com
-    - user.aitdevops.com
-    - approval.aitdevops.com
+      - auth.aitdevops.com
+      - user.aitdevops.com
+      - approval.aitdevops.com
     secretName: backend-tls
   rules:
   - host: auth.aitdevops.com
