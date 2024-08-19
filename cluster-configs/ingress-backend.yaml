@@ -27,7 +27,6 @@ spec:
             name: auth-service
             port:
               number: 3001
-          namespace: default  # Add this line
   - host: user.aitdevops.com
     http:
       paths:
@@ -38,7 +37,6 @@ spec:
             name: user-service
             port:
               number: 3002
-          namespace: default  # Add this line
   - host: approval.aitdevops.com
     http:
       paths:
@@ -49,4 +47,3 @@ spec:
             name: approval-service
             port:
               number: 3003
-          namespace: default  # Add this line
