@@ -2,7 +2,7 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: frontend-ingress
-  namespace: frontend
+  namespace: default
   annotations:
     cert-manager.io/cluster-issuer: letsencrypt-frontend
     cert-manager.io/acme-challenge-type: http01
