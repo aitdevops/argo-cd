@@ -1,5 +1,6 @@
 # 🚀 ArgoCD Setup for aitdevops-site
-Welcome to the repository that manages CD for the aitdevops project. This guide will help you install ArgoCD in GKE and retrieve the admin password, configure it with a Ingress Controller & Cert-Manager using helm. Follow the steps below to get started!
+
+Welcome to the repository that manages Continuous Deployment (CD) for the aitdevops project. This guide will help you install ArgoCD in GKE and retrieve the admin password, configure it with an Ingress Controller & Cert-Manager. Follow the steps below to get started!
 
 ## 📋 Prerequisites
 
@@ -18,7 +19,7 @@ Welcome to the repository that manages CD for the aitdevops project. This guide 
 
 2. **Apply ArgoCD Manifests**:
     ```sh
-    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/v2.4.7/manifests/install.yaml
+    kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
     ```
 
 3. **Patch Service Type to LoadBalancer**:
@@ -33,52 +34,36 @@ Welcome to the repository that manages CD for the aitdevops project. This guide 
 
 ### 2. Install NGINX Ingress Controller
 
-1. **Add the Ingress NGINX Helm repository**:
+1. **Create the Ingress NGINX Namespace**:
     ```sh
-    helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    helm repo update
+    kubectl create namespace ingress-nginx
     ```
 
-2. **Install the NGINX Ingress controller**:
+2. **Apply the NGINX Ingress Controller Manifests**:
     ```sh
-    helm install ingress-nginx ingress-nginx/ingress-nginx --namespace ingress-nginx --create-namespace
+    kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml -n ingress-nginx
+    ```
+
+3. **Verify the NGINX Ingress Controller Installation**:
+    ```sh
+    kubectl get pods -n ingress-nginx
     ```
 
 ### 3. Install Cert-Manager
 
-1. **Add the Jetstack Helm repository**:
+1. **Create the Cert-Manager Namespace**:
     ```sh
-    helm repo add jetstack https://charts.jetstack.io
-    helm repo update
+    kubectl create namespace cert-manager
     ```
 
-2. **Install Cert-Manager**:
+2. **Install Cert-Manager CRDs**:
     ```sh
-    helm install cert-manager jetstack/cert-manager --namespace cert-manager --create-namespace --version v1.5.3
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.crds.yaml
     ```
 
-3. **Create a ClusterIssuer for Let's Encrypt**:
-
-    ```yaml
-    apiVersion: cert-manager.io/v1
-    kind: ClusterIssuer
-    metadata:
-      name: letsencrypt-prod
-    spec:
-      acme:
-        server: https://acme-v02.api.letsencrypt.org/directory
-        email: your-email@example.com
-        privateKeySecretRef:
-          name: letsencrypt-prod
-        solvers:
-        - http01:
-            ingress:
-              class: nginx
-    ```
-
-4. **Apply the ClusterIssuer**:
+3. **Apply the Cert-Manager Installation Manifests**:
     ```sh
-    kubectl apply -f cluster-issuer.yaml
+    kubectl apply -f https://github.com/cert-manager/cert-manager/releases/download/v1.12.0/cert-manager.yaml -n cert-manager
     ```
 
 ## 🎯 Accessing the ArgoCD UI
@@ -89,8 +74,10 @@ Once you have retrieved the admin password, you can access the ArgoCD UI. Use th
 
 This repository includes the following directories:
 
-- `manifests/` - Contains ArgoCD application manifests
-- `docs/` - Documentation and guides
+- `argo-apps/` - Contains ArgoCD application manifests
+- `backend/` - Contains backend microservices manifests
+- `frontend/` - Contains frontend manifests
+- `cluster-configs/` - Contains ingress&cert-manager manifests
 
 ## 🤝 Contributing
 
@@ -104,4 +91,4 @@ Happy deploying with ArgoCD on GKE! 🚀
 
 ### Note:
 - Ensure to replace `rajeevkoppisetti21@gmail.com` with your actual email address in the ClusterIssuer configuration.
-- The instructions assume that Helm and kubectl are installed and configured to interact with your GKE cluster.
+- The instructions assume that `kubectl` is installed and configured to interact with your GKE cluster.
