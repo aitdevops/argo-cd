@@ -6,22 +6,22 @@ metadata:
 spec:
   generators:
     - git:
-        repoURL: 'https://github.com/aitdevops/argocd.git'
+        repoURL: https://github.com/aitdevops/argocd.git  # Replace with your repo URL
         revision: main
         directories:
-          - path: 'argo-cd/argo-apps/*'
+          - path: argo-cd/argo-apps/*/
   template:
     metadata:
       name: '{{path.basename}}'
     spec:
       project: default
       source:
-        repoURL: 'https://github.com/aitdevops/argocd.git'
+        repoURL: https://github.com/aitdevops/argocd.git  # Replace with your repo URL
         targetRevision: main
-        path: 'argo-cd/argo-apps/{{path.basename}}'
+        path: argo-cd/argo-apps/{{path.basename}}
       destination:
         server: 'https://kubernetes.default.svc'
-        namespace: '{{path.basename}}'
+        namespace: default
       syncPolicy:
         automated:
           prune: true
