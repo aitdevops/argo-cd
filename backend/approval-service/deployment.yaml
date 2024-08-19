@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: approval-service
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/approval-service:latest"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/approval-service:d7bee274c5a0446a71ff642786f67e8188f35a54-approval"
           ports:
             - containerPort: 3003
           livenessProbe:
