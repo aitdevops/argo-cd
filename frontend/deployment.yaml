@@ -21,9 +21,9 @@ spec:
       containers:
         - name: aitdevops-site
 <<<<<<< HEAD
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend:latest"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend:06e49ff7b1f817f9071645311759391717b23512"
 =======
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/aitdevops-site:6144a68ef9ad9410067af132b0a8f615729f7143"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/frontend:06e49ff7b1f817f9071645311759391717b23512"
 >>>>>>> 3c466fe0cbdf86723263682ec4613ce8cd3793d9
           ports:
             - containerPort: 80
