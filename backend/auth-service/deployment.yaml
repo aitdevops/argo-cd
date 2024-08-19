@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth-service:ec508177d695da4d2ce580982f386bbdd1d6055c-auth"
+          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth-service:latest"
           ports:
             - containerPort: 3001
           livenessProbe:

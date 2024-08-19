@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: 'https://github.com/aitdevops/argocd.git'
     targetRevision: main
-    path: charts/approval-service
+    path: backend/approval-service
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: default
