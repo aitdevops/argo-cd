@@ -23,8 +23,6 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: ${{ secrets.PROJECT_ID }}
-        service_account_key: ${{ secrets.SA_KEY }}
-        export_default_credentials: true
         install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters
 
 
