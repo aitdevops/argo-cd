@@ -84,6 +84,10 @@ jobs:
       run: |
         gcloud dns record-sets transaction start --zone=${{ secrets.DNS_ZONE }}
         gcloud dns record-sets transaction remove --name=${{ secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction remove --name=${{ argo.secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction remove --name=${{ auth.secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction remove --name=${{ user.secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction remove --name=${{ approval.secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
         gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
         gcloud dns record-sets transaction execute --zone=${{ secrets.DNS_ZONE }}
 
