@@ -83,30 +83,30 @@ jobs:
     - name: Update DNS Record in Cloud DNS
       run: |
         gcloud dns record-sets transaction start --zone=${{ secrets.DNS_ZONE }}
-        gcloud dns record-sets transaction remove --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction remove --name=${{ secrets.DNS_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
         gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
         gcloud dns record-sets transaction execute --zone=${{ secrets.DNS_ZONE }}
 
-    - name: Monitor Resources
-      run: |
-        kubectl get all --namespace cert-manager
-        kubectl get all --namespace argocd
-        kubectl get all --namespace ingress-nginx
-        kubectl get svc --namespace argocd
-        kubectl get ingress --namespace argocd
+    # - name: Monitor Resources
+    #   run: |
+    #     kubectl get all --namespace cert-manager
+    #     kubectl get all --namespace argocd
+    #     kubectl get all --namespace ingress-nginx
+    #     kubectl get svc --namespace argocd
+    #     kubectl get ingress --namespace argocd
 
-    - name: Rollback on Failure
-      if: failure()
-      run: |
-        echo "Deployment failed. Rolling back..."
-        helm rollback cert-manager --namespace cert-manager
-        helm rollback argocd --namespace argocd
-        helm rollback ingress-nginx --namespace ingress-nginx
+    # - name: Rollback on Failure
+    #   if: failure()
+    #   run: |
+    #     echo "Deployment failed. Rolling back..."
+    #     helm rollback cert-manager --namespace cert-manager
+    #     helm rollback argocd --namespace argocd
+    #     helm rollback ingress-nginx --namespace ingress-nginx
 
-    - name: Notify on Success
-      if: success()
-      run: echo "Deployment successful!"
+    # - name: Notify on Success
+    #   if: success()
+    #   run: echo "Deployment successful!"
 
-    - name: Notify on Failure
-      if: failure()
-      run: echo "Deployment failed!"
+    # - name: Notify on Failure
+    #   if: failure()
+    #   run: echo "Deployment failed!"
