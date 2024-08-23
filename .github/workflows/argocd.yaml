@@ -60,8 +60,8 @@ jobs:
 
     - name: Install ArgoCD Applications
       run:  |
-        install_components: kubectl
-        Kubectl apply -f -n argocd argo-apps/*
+        kubectl apply -f argo-apps/ -n argocd
+
 
     - name: Monitor Resources
       run: |
