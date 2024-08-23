@@ -58,42 +58,20 @@ jobs:
     #       --namespace ingress-nginx --create-namespace \
     #       --version 4.7.0
 
+    - name: Deploy EXTERNAL-DNS using Helm
+      run: |
+        helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+        helm repo update
+        helm upgrade --install external-dns external-dns/external-dns \
+          --namespace external-dns --create-namespace \
+          --version 1.14.5
+
+
+
     # - name: Install ArgoCD Applications
     #   run:  |
     #     kubectl apply -f argo-apps/ -n argocd
 
-    - name: Wait for Ingress to Get IP
-      run: |
-        echo "Waiting for the Ingress IP..."
-        for i in {1..30}; do
-          INGRESS_IP=$(kubectl get ingress -n argocd -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
-          if [ -n "$INGRESS_IP" ]; then
-            echo "Ingress IP is $INGRESS_IP"
-            break
-          fi
-          echo "Waiting for ingress IP... ($i/30)"
-          sleep 10
-        done
-        if [ -z "$INGRESS_IP" ]; then
-          echo "Ingress IP was not found after waiting for 5 minutes."
-          exit 1
-        fi
-        echo "INGRESS_IP=$INGRESS_IP" >> $GITHUB_ENV
-
-    - name: Update DNS Record in Cloud DNS
-      run: |
-        gcloud dns record-sets transaction start --zone=${{ secrets.DNS_ZONE }}
-        gcloud dns record-sets transaction remove --name=${{ secrets.SITE_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-        gcloud dns record-sets transaction remove --name=${{ secrets.ARGO_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-        gcloud dns record-sets transaction remove --name=${{ secrets.AUTH_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-        gcloud dns record-sets transaction remove --name=${{ secrets.USER_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-        gcloud dns record-sets transaction remove --name=${{ secrets.APPROVAL_RECORD_NAME }} --type=A "0.0.0.0" --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.SITE_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.ARGO_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.AUTH_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.USER_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.APPROVAL_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-        gcloud dns record-sets transaction execute --zone=${{ secrets.DNS_ZONE }}
 
     # - name: Monitor Resources
     #   run: |
