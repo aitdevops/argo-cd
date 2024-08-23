@@ -30,43 +30,43 @@ jobs:
       run: |
         gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.CLUSTER_ZONE }} --project ${{ secrets.PROJECT_ID }}
 
-    - name: Set up Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    # - name: Set up Helm
+    #   run: |
+    #     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-    - name: Deploy cert-manager using Helm
-      run: |
-        helm repo add jetstack https://charts.jetstack.io
-        helm repo update
-        helm upgrade --install cert-manager jetstack/cert-manager \
-          --namespace cert-manager --create-namespace \
-          --version v1.15.3 --set crds.enabled=true
+    # - name: Deploy cert-manager using Helm
+    #   run: |
+    #     helm repo add jetstack https://charts.jetstack.io
+    #     helm repo update
+    #     helm upgrade --install cert-manager jetstack/cert-manager \
+    #       --namespace cert-manager --create-namespace \
+    #       --version v1.15.3 --set crds.enabled=true
 
-    - name: Deploy ArgoCD using Helm
-      run: |
-        helm repo add argo https://argoproj.github.io/argo-helm
-        helm repo update
-        helm upgrade --install argocd argo/argo-cd \
-          --namespace argocd --create-namespace \
-          --version 5.24.0
+    # - name: Deploy ArgoCD using Helm
+    #   run: |
+    #     helm repo add argo https://argoproj.github.io/argo-helm
+    #     helm repo update
+    #     helm upgrade --install argocd argo/argo-cd \
+    #       --namespace argocd --create-namespace \
+    #       --version 5.24.0
 
-    - name: Deploy NGINX Ingress Controller using Helm
-      run: |
-        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-        helm repo update
-        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-          --namespace ingress-nginx --create-namespace \
-          --version 4.7.0
+    # - name: Deploy NGINX Ingress Controller using Helm
+    #   run: |
+    #     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+    #     helm repo update
+    #     helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+    #       --namespace ingress-nginx --create-namespace \
+    #       --version 4.7.0
 
-    - name: Install ArgoCD Applications
-      run:  |
-        kubectl apply -f argo-apps/ -n argocd
+    # - name: Install ArgoCD Applications
+    #   run:  |
+    #     kubectl apply -f argo-apps/ -n argocd
 
     - name: Wait for Ingress to Get IP
       run: |
         echo "Waiting for the Ingress IP..."
         for i in {1..30}; do
-          INGRESS_IP=$(kubectl get ingress ingress-nginx -n ingress-nginx -o jsonpath="{.status.loadBalancer.ingress[0].ip}")
+          INGRESS_IP=$(kubectl get ingress -n argocd -o jsonpath="{.items[0].status.loadBalancer.ingress[0].ip}")
           if [ -n "$INGRESS_IP" ]; then
             echo "Ingress IP is $INGRESS_IP"
             break
@@ -80,12 +80,12 @@ jobs:
         fi
         echo "INGRESS_IP=$INGRESS_IP" >> $GITHUB_ENV
 
-    # - name: Update DNS Record in Cloud DNS
-    #   run: |
-    #     gcloud dns record-sets transaction start --zone=${{ secrets.DNS_ZONE }}
-    #     gcloud dns record-sets transaction remove --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
-    #     gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
-    #     gcloud dns record-sets transaction execute --zone=${{ secrets.DNS_ZONE }}
+    - name: Update DNS Record in Cloud DNS
+      run: |
+        gcloud dns record-sets transaction start --zone=${{ secrets. }}
+        gcloud dns record-sets transaction remove --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300 --quiet
+        gcloud dns record-sets transaction add $INGRESS_IP --name=${{ secrets.DNS_RECORD_NAME }} --type=A --zone=${{ secrets.DNS_ZONE }} --ttl=300
+        gcloud dns record-sets transaction execute --zone=${{ secrets.DNS_ZONE }}
 
     - name: Monitor Resources
       run: |
