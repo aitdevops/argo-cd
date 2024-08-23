@@ -68,6 +68,7 @@ jobs:
         kubectl get all --namespace cert-manager
         kubectl get all --namespace argocd
         kubectl get all --namespace ingress-nginx
+        kubectl get all --namespace svc
 
     - name: Rollback on Failure
       if: failure()
