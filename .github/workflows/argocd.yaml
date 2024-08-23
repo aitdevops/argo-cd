@@ -60,7 +60,7 @@ jobs:
 
     - name: Install ArgoCD Applications
       run:  |
-        Kubectl apply -f -n argocd argocd/*
+        Kubectl apply -f -n argocd argo-apps/*
 
     - name: Monitor Resources
       run: |
