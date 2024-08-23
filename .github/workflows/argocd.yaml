@@ -58,6 +58,10 @@ jobs:
           --namespace ingress-nginx --create-namespace \
           --version 4.7.0
 
+    - name: Install ArgoCD Applications
+      run:  |
+        Kubectl apply -f -n argocd argocd/*
+
     - name: Monitor Resources
       run: |
         kubectl get all --namespace cert-manager
