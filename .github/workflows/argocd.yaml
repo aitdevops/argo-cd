@@ -30,33 +30,33 @@ jobs:
       run: |
         gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.CLUSTER_ZONE }} --project ${{ secrets.PROJECT_ID }}
 
-    # - name: Set up Helm
-    #   run: |
-    #     curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+    - name: Set up Helm
+      run: |
+        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-    # - name: Deploy cert-manager using Helm
-    #   run: |
-    #     helm repo add jetstack https://charts.jetstack.io
-    #     helm repo update
-    #     helm upgrade --install cert-manager jetstack/cert-manager \
-    #       --namespace cert-manager --create-namespace \
-    #       --version v1.15.3 --set crds.enabled=true
+    - name: Deploy cert-manager using Helm
+      run: |
+        helm repo add jetstack https://charts.jetstack.io
+        helm repo update
+        helm upgrade --install cert-manager jetstack/cert-manager \
+          --namespace cert-manager --create-namespace \
+          --version v1.15.3 --set crds.enabled=true
 
-    # - name: Deploy ArgoCD using Helm
-    #   run: |
-    #     helm repo add argo https://argoproj.github.io/argo-helm
-    #     helm repo update
-    #     helm upgrade --install argocd argo/argo-cd \
-    #       --namespace argocd --create-namespace \
-    #       --version 5.24.0
+    - name: Deploy ArgoCD using Helm
+      run: |
+        helm repo add argo https://argoproj.github.io/argo-helm
+        helm repo update
+        helm upgrade --install argocd argo/argo-cd \
+          --namespace argocd --create-namespace \
+          --version 5.24.0
 
-    # - name: Deploy NGINX Ingress Controller using Helm
-    #   run: |
-    #     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    #     helm repo update
-    #     helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-    #       --namespace ingress-nginx --create-namespace \
-    #       --version 4.7.0
+    - name: Deploy NGINX Ingress Controller using Helm
+      run: |
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        helm repo update
+        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+          --namespace ingress-nginx --create-namespace \
+          --version 4.7.0
 
     - name: Deploy EXTERNAL-DNS using Helm
       run: |
@@ -68,31 +68,31 @@ jobs:
 
 
 
-    # - name: Install ArgoCD Applications
-    #   run:  |
-    #     kubectl apply -f argo-apps/ -n argocd
+    - name: Install ArgoCD Applications
+      run:  |
+        kubectl apply -f argo-apps/ -n argocd
 
 
-    # - name: Monitor Resources
-    #   run: |
-    #     kubectl get all --namespace cert-manager
-    #     kubectl get all --namespace argocd
-    #     kubectl get all --namespace ingress-nginx
-    #     kubectl get svc --namespace argocd
-    #     kubectl get ingress --namespace argocd
+    - name: Monitor Resources
+      run: |
+        kubectl get all --namespace cert-manager
+        kubectl get all --namespace argocd
+        kubectl get all --namespace ingress-nginx
+        kubectl get svc --namespace argocd
+        kubectl get ingress --namespace argocd
 
-    # - name: Rollback on Failure
-    #   if: failure()
-    #   run: |
-    #     echo "Deployment failed. Rolling back..."
-    #     helm rollback cert-manager --namespace cert-manager
-    #     helm rollback argocd --namespace argocd
-    #     helm rollback ingress-nginx --namespace ingress-nginx
+    - name: Rollback on Failure
+      if: failure()
+      run: |
+        echo "Deployment failed. Rolling back..."
+        helm rollback cert-manager --namespace cert-manager
+        helm rollback argocd --namespace argocd
+        helm rollback ingress-nginx --namespace ingress-nginx
 
-    # - name: Notify on Success
-    #   if: success()
-    #   run: echo "Deployment successful!"
+    - name: Notify on Success
+      if: success()
+      run: echo "Deployment successful!"
 
-    # - name: Notify on Failure
-    #   if: failure()
-    #   run: echo "Deployment failed!"
+    - name: Notify on Failure
+      if: failure()
+      run: echo "Deployment failed!"
