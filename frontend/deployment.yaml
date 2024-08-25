@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: aitdevops-site
-          image: "us-central1-docker.pkg.dev/$PROJECT_ID/$CLUSTER_NAME/frontend:f177a967e7a48250d94fa6c4d95089cc7e0b3926"
+          image: "us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.CLUSTER_NAME }}/frontend:f177a967e7a48250d94fa6c4d95089cc7e0b3926"
           ports:
             - containerPort: 80
           livenessProbe:

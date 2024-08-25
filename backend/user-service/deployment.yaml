@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: "us-central1-docker.pkg.dev/$PROJECT_ID/$CLUSTER_NAME/user-service:6a2b4d9fa9af817a7e851774603153f9f961f22e-user"
+          image: "us-central1-docker.pkg.dev/${{ secrets.PROJECT_ID }}/${{ secrets.CLUSTER_NAME }}/user-service:6a2b4d9fa9af817a7e851774603153f9f961f22e-user"
           ports:
             - containerPort: 3002
           livenessProbe:
