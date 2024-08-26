@@ -23,7 +23,7 @@ jobs:
       uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: ${{ secrets.PROJECT_ID }}
-        install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters
+        install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters.
 
 
     - name: Get GKE credentials
