@@ -22,7 +22,7 @@ spec:
       serviceAccountName: k8s-service-account
       containers:
         - name: auth-service
-          image: "us-central1-docker.pkg.dev/aitdevops8/aitdevops-gke/auth-service:4dab41115bd965340cf4c906ffcd7eedaeba2e2f-auth"
+          image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/auth-service:4dab41115bd965340cf4c906ffcd7eedaeba2e2f-auth"
           ports:
             - containerPort: 3001
           livenessProbe:
