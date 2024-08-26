@@ -19,6 +19,7 @@ spec:
         app.kubernetes.io/instance: user-service-instance
         app.kubernetes.io/name: user-service
     spec:
+      serviceAccountName: k8s-service-account
       containers:
         - name: user-service
           image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/user-service:6a2b4d9fa9af817a7e851774603153f9f961f22e-user"
