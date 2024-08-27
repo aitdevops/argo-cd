@@ -22,7 +22,7 @@ spec:
       serviceAccountName: k8s-service-account
       containers:
         - name: approval-service
-          image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/approval-service:f915264538e1e9b4c60bf87021ab7fb3be0f2f52-approval"
+          image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/approval-service:7e560ab99b3b73bbfe594441a634eb7eafc6dddd-approval"
           ports:
             - containerPort: 3003
           livenessProbe:
