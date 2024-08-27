@@ -71,7 +71,6 @@ jobs:
     - name: Install ArgoCD Applications
       run:  |
         kubectl apply -f argo-apps/ -n argocd
-        kubectl apply -f cluster-configs/
 
 
     - name: Monitor Resources
