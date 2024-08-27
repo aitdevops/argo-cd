@@ -40,7 +40,7 @@ jobs:
         helm repo update
         helm upgrade --install cert-manager jetstack/cert-manager \
           --namespace cert-manager --create-namespace \
-          --version v1.15.3 --set crds.enabled=true
+          --version v1.15.3 --set crds.enabled=true \
           -f helm-values/cert-values.yaml
 
     - name: Deploy ArgoCD using Helm
@@ -49,7 +49,7 @@ jobs:
         helm repo update
         helm upgrade --install argocd argo/argo-cd \
           --namespace argocd --create-namespace \
-          --version 5.24.0
+          --version 5.24.0 \
           -f helm-values/argo-values.yaml
 
     - name: Deploy NGINX Ingress Controller using Helm
@@ -58,7 +58,7 @@ jobs:
         helm repo update
         helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
           --namespace ingress-nginx --create-namespace \
-          --version 4.7.0
+          --version 4.7.0 \
           -f helm-values/ingress-values.yaml
 
     - name: Deploy EXTERNAL-DNS using Helm
@@ -67,7 +67,7 @@ jobs:
         helm repo update
         helm upgrade --install external-dns external-dns/external-dns \
           --namespace external-dns --create-namespace \
-          --version 1.14.5
+          --version 1.14.5 \
           -f helm-values/dns-values.yaml
 
 
