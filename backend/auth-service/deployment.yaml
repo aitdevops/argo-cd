@@ -19,6 +19,16 @@ spec:
         app.kubernetes.io/instance: auth-service-instance
         app.kubernetes.io/name: auth-service
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - auth-service
+            topologyKey: "kubernetes.io/hostname"
       serviceAccountName: k8s-service-account
       containers:
         - name: auth-service

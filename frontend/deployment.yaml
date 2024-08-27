@@ -19,6 +19,16 @@ spec:
         app.kubernetes.io/instance: aitdevops-site-instance
         app.kubernetes.io/name: aitdevops-site
     spec:
+      affinity:
+        podAntiAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+              - key: app.kubernetes.io/name
+                operator: In
+                values:
+                - aitdevops-site
+            topologyKey: "kubernetes.io/hostname"
       serviceAccountName: k8s-service-account
       containers:
         - name: aitdevops-site
