@@ -22,7 +22,7 @@ spec:
       serviceAccountName: k8s-service-account
       containers:
         - name: user-service
-          image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/user-service:dd7bb1da8dcf0350c4f7cd76dbf3b5890f9a0000-user"
+          image: "us-central1-docker.pkg.dev/devops-projects-426703/aitdevops-gke/user-service:d644be22be9374effc22259410dac4d0c342f4f1-user"
           ports:
             - containerPort: 3002
           livenessProbe:
