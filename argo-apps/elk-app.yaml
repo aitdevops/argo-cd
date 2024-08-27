@@ -8,7 +8,9 @@ spec:
   source:
     repoURL: 'https://github.com/aitdevops/argocd.git'
     targetRevision: main
-    path: 'elk'
+    path: elk
+    directory:
+      recurse: true
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: elk-stack
@@ -18,14 +20,3 @@ spec:
       selfHeal: true
     syncOptions:
       - CreateNamespace=true
-  source:
-    directory:
-      recurse: true
-  destination:
-    namespace: elk-stack
-    server: https://kubernetes.default.svc
-  project: default
-  syncPolicy:
-    automated:
-      prune: true
-      selfHeal: true
