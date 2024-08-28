@@ -19,7 +19,7 @@ spec:
         - key: "role"
           operator: "Equal"
           value: "frontend-backend-redis"
-          effect: "NO_SCHEDULE"
+          effect: "NoSchedule"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
