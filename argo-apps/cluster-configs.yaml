@@ -8,11 +8,13 @@ spec:
   source:
     repoURL: 'https://github.com/aitdevops/argocd.git'
     targetRevision: main
-    path: 'cluster-configs'
+    path: cluster-configs
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: cluster-configs
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

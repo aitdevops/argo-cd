@@ -11,8 +11,10 @@ spec:
     path: frontend
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: frontend
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true

@@ -11,8 +11,10 @@ spec:
     path: backend/approval-service
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: default
+    namespace: backend
   syncPolicy:
     automated:
       prune: true
       selfHeal: true
+    syncOptions:
+      - CreateNamespace=true
