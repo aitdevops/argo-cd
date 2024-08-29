@@ -50,23 +50,19 @@ jobs:
           --namespace argocd --create-namespace \
           --version 5.24.0 \
 
-    # - name: Deploy NGINX Ingress Controller using Helm
-    #   run: |
-    #     helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-    #     helm repo update
-    #     helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-    #       --namespace ingress-nginx --create-namespace \
-    #       --version 4.7.0 \
-    #       -f helm-values/ingress-values.yaml
+    - name: Deploy NGINX Ingress Controller using Helm
+      run: |
+        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+        helm repo update
+        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+          --namespace ingress-nginx --create-namespace
 
-    # - name: Deploy EXTERNAL-DNS using Helm
-    #   run: |
-    #     helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
-    #     helm repo update
-    #     helm upgrade --install external-dns external-dns/external-dns \
-    #       --namespace external-dns --create-namespace \
-    #       --version 1.14.5 \
-    #       -f helm-values/dns-values.yaml
+    - name: Deploy EXTERNAL-DNS using Helm
+      run: |
+        helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+        helm repo update
+        helm upgrade --install external-dns external-dns/external-dns \
+          --namespace external-dns --create-namespace
 
 
     - name: Install ArgoCD Applications
