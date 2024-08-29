@@ -1,0 +1,50 @@
+{{- if .Values.certManager.enabled }}
+apiVersion: cert-manager.io/v1
+kind: Issuer
+metadata:
+  name: letsencrypt
+  namespace: {{ .Release.Namespace }}
+spec:
+  acme:
+    server: https://acme-v02.api.letsencrypt.org/directory
+    email: "your-email@example.com"
+    privateKeySecretRef:
+      name: letsencrypt-key
+    solvers:
+    - http01:
+        ingress:
+          class: nginx
+---
+# Taints, Tolerations, and Affinity for cert-manager Pods
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "cert-manager.fullname" . }}
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "cert-manager.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "cert-manager.name" . }}
+    spec:
+      nodeSelector:
+        {{- with .Values.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      tolerations:
+        {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      affinity:
+        {{- with .Values.affinity }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      containers:
+      - name: cert-manager
+        image: "quay.io/jetstack/cert-manager-controller:v1.6.1"
+        ports:
+        - containerPort: 9402
+{{- end }}

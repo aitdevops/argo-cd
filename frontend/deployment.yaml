@@ -19,11 +19,6 @@ spec:
         app.kubernetes.io/instance: aitdevops-site-instance
         app.kubernetes.io/name: aitdevops-site
     spec:
-      tolerations:
-        - key: "role"
-          operator: "Equal"
-          value: "frontend-backend-redis"
-          effect: "NoSchedule"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -32,7 +27,7 @@ spec:
                   - key: "role"
                     operator: "In"
                     values:
-                      - "frontend-backend-redis"
+                      - "frontend-pool"
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

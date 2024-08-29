@@ -1,0 +1,18 @@
+ingress:
+  enabled: true
+  annotations: {}
+  hosts:
+    - host: aitdevops.com
+      paths:
+        - /
+  nodeSelector:
+    role: frontend-pool
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "role"
+                operator: In
+                values:
+                  - "frontend-pool"

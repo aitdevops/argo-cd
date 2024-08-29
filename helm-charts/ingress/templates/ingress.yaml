@@ -1,0 +1,61 @@
+{{- if .Values.ingress.enabled }}
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: {{ include "ingress.fullname" . }}
+  namespace: ingress # Ensure this is the correct namespace
+  annotations:
+    {{- with .Values.ingress.annotations }}
+    {{- toYaml . | nindent 4 }}
+    {{- end }}
+spec:
+  rules:
+    {{- range .Values.ingress.hosts }}
+    - host: {{ .host }}
+      http:
+        paths:
+          {{- range .paths }}
+          - path: {{ . }}
+            pathType: ImplementationSpecific
+            backend:
+              service:
+                name: {{ include "ingress.fullname" $ }}
+                port:
+                  number: 80
+          {{- end }}
+    {{- end }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "ingress.fullname" . }}
+  namespace: ingress # Ensure this is the correct namespace
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: {{ include "ingress.name" . }}
+  template:
+    metadata:
+      labels:
+        app: {{ include "ingress.name" . }}
+    spec:
+      serviceAccountName: k8s-service-account  # Ensure it uses the correct service account
+      nodeSelector:
+        {{- with .Values.nodeSelector }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      tolerations:
+        {{- with .Values.tolerations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      affinity:
+        {{- with .Values.affinity }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      containers:
+      - name: nginx
+        image: "nginx:stable"
+        ports:
+        - containerPort: 80
+{{- end }}

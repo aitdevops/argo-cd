@@ -1,0 +1,6 @@
+apiVersion: v2
+name: argocd
+description: A Helm chart for Argo CD in GKE
+type: application
+version: 1.0.0
+appVersion: "latest"  # This will pull the latest stable version of Argo CD

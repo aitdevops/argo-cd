@@ -19,11 +19,6 @@ spec:
         app.kubernetes.io/instance: approval-service-instance
         app.kubernetes.io/name: approval-service
     spec:
-      tolerations:
-        - key: "role"
-          operator: "Equal"
-          value: "frontend-backend-redis"
-          effect: "NoSchedule"
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -32,7 +27,7 @@ spec:
                   - key: "role"
                     operator: "In"
                     values:
-                      - "frontend-backend-redis"
+                      - "backend-pool"
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
           - labelSelector:

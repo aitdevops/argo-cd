@@ -1,0 +1,33 @@
+global:
+  image:
+    tag: v2.6.7  # Pulls the latest version of Argo CD images
+  namespaceOverride: default
+
+server:
+  service:
+    type: LoadBalancer  # Expose the Argo CD server using a LoadBalancer
+    port: 80
+    targetPort: 8080
+
+controller:
+  resources:
+    limits:
+      cpu: 500m
+      memory: 512Mi
+    requests:
+      cpu: 250m
+      memory: 256Mi
+
+dex:
+  enabled: false  # Disable Dex; configure it later if needed
+
+redis:
+  enabled: true
+  usePassword: false
+
+installCRDs: true
+
+rbac:
+  create: true
+  policy: |
+    g, system:serviceaccount:default:argocd-server, role:admin

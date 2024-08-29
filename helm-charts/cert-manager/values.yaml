@@ -1,0 +1,21 @@
+certManager:
+  enabled: true
+  installCRDs: true
+  webhook:
+    enabled: true
+  nodeSelector:
+    role: argocd-cert-dns
+  tolerations:
+    - key: "role"
+      operator: "Equal"
+      value: "argocd-cert-dns"
+      effect: "NO_SCHEDULE"
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+          - matchExpressions:
+              - key: "role"
+                operator: In
+                values:
+                  - "argocd-cert-dns"

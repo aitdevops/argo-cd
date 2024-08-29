@@ -15,6 +15,14 @@ spec:
         app: logstash
     spec:
       affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: "role"
+                    operator: "In"
+                    values:
+                      - "frontend-pool"  # Ensure this matches the label of the node where you want Logstash to run
         podAntiAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
             - labelSelector:

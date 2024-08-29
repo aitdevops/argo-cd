@@ -1,0 +1,25 @@
+provider: google
+google:
+  project: devops-projects-426703
+
+rbac:
+  create: true
+
+serviceAccount:
+  create: false  # We are using an existing service account
+  name: k8s-service-account  # Name of your existing Kubernetes service account
+
+domainFilters:
+  - "aitdevops.com"
+
+txtOwnerId: "gke-aitdevops-external-dns"
+policy: sync
+logLevel: info
+
+# Add the following annotations to handle specific subdomains
+annotations:
+  external-dns.alpha.kubernetes.io/hostname: |
+    argo.aitdevops.com,
+    auth.aitdevops.com,
+    user.aitdevops.com,
+    approval.aitdevops.com
