@@ -22,6 +22,7 @@ jobs:
       with:
         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}  # Workload Identity Provider resource name
         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}  # Email of the Google service account
+        project_id: ${{ secrets.PROJECT_ID }}  # Explicitly specify the GCP project ID
 
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
