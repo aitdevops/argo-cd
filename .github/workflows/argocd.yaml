@@ -13,18 +13,17 @@ jobs:
     - name: Checkout the repository
       uses: actions/checkout@v3
 
-    
-    - name: Set up Google Cloud auth
+    - name: Authenticate to Google Cloud with Workload Identity Federation
       uses: google-github-actions/auth@v1
       with:
-          credentials_json: ${{ secrets.GCP_SA_KEY }}  # Authenticates to Google Cloud using service account credentials
+        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}  # Workload Identity Provider resource name
+        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}  # Email of the Google service account
 
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       with:
         project_id: ${{ secrets.PROJECT_ID }}
         install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters.
-
 
     - name: Get GKE credentials
       run: |
@@ -40,7 +39,7 @@ jobs:
         helm repo update
         helm upgrade --install cert-manager jetstack/cert-manager \
           --namespace cert-manager --create-namespace \
-          --version v1.15.3 --set crds.enabled=true \
+          --version v1.15.3 --set crds.enabled=true
 
     - name: Deploy ArgoCD using Helm
       run: |
@@ -48,7 +47,7 @@ jobs:
         helm repo update
         helm upgrade --install argocd argo/argo-cd \
           --namespace argocd --create-namespace \
-          --version 5.24.0 \
+          --version 5.24.0
 
     - name: Deploy NGINX Ingress Controller using Helm
       run: |
@@ -64,17 +63,15 @@ jobs:
         helm upgrade --install external-dns external-dns/external-dns \
           --namespace external-dns --create-namespace
 
-
     - name: Install ArgoCD Applications
       run:  |
         kubectl apply -f argo-apps/ -n argocd
-
 
     - name: Monitor Resources
       run: |
         kubectl get all --namespace cert-manager
         kubectl get all --namespace argocd
-        kubectl get all --namespace ingress
+        kubectl get all --namespace ingress-nginx
         kubectl get svc --namespace argocd
         kubectl get ingress --namespace argocd
 
