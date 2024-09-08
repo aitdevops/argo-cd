@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: "aitdevops.azurecr.io/auth-service:20240908220939-auth"
+          image: "aitdevops.azurecr.io/auth-service:20240908221707-auth"
           ports:
             - containerPort: 3001
           livenessProbe:
