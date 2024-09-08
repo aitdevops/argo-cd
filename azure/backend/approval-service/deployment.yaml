@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: approval-service
-          image: "aitdevops.azurecr.io/approval-service:20240908224333-approval"
+          image: "aitdevops.azurecr.io/approval-service:20240908225147"
           ports:
             - containerPort: 3003
           livenessProbe:
