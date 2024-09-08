@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: aitdevops-site
-          image: "aitdevops.azurecr.io/frontend:20240908220846"
+          image: "aitdevops.azurecr.io/frontend:20240908221615"
           ports:
             - containerPort: 80
           livenessProbe:
