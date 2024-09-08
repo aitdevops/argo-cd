@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: user-service
-          image: "aitdevops.azurecr.io/user-service:20240908220939-user"
+          image: "aitdevops.azurecr.io/user-service:20240908221707-user"
           ports:
             - containerPort: 3002
           livenessProbe:
