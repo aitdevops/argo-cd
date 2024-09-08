@@ -1,97 +1,97 @@
-name: Deploy to GKE
+# name: Deploy to GKE
 
-on:
-  push:
-    branches:
-      - main
+# on:
+#   push:
+#     branches:
+#       - main
 
-permissions:
-  contents: read
-  id-token: write  # This allows the workflow to request an OIDC token
+# permissions:
+#   contents: read
+#   id-token: write  # This allows the workflow to request an OIDC token
 
-jobs:
-  deploy:
-    runs-on: ubuntu-latest
+# jobs:
+#   deploy:
+#     runs-on: ubuntu-latest
 
-    steps:
-    - name: Checkout the repository
-      uses: actions/checkout@v3
+#     steps:
+#     - name: Checkout the repository
+#       uses: actions/checkout@v3
 
-    - name: Authenticate to Google Cloud with Workload Identity Federation
-      uses: google-github-actions/auth@v1
-      with:
-        workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}  # Workload Identity Provider resource name
-        service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}  # Email of the Google service account
-        project_id: ${{ secrets.PROJECT_ID }}  # Explicitly specify the GCP project ID
+#     - name: Authenticate to Google Cloud with Workload Identity Federation
+#       uses: google-github-actions/auth@v1
+#       with:
+#         workload_identity_provider: ${{ secrets.WORKLOAD_IDENTITY_PROVIDER }}  # Workload Identity Provider resource name
+#         service_account: ${{ secrets.GCP_SERVICE_ACCOUNT_EMAIL }}  # Email of the Google service account
+#         project_id: ${{ secrets.PROJECT_ID }}  # Explicitly specify the GCP project ID
 
-    - name: Set up Google Cloud SDK
-      uses: google-github-actions/setup-gcloud@v1
-      with:
-        project_id: ${{ secrets.PROJECT_ID }}
-        install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters.
+#     - name: Set up Google Cloud SDK
+#       uses: google-github-actions/setup-gcloud@v1
+#       with:
+#         project_id: ${{ secrets.PROJECT_ID }}
+#         install_components: kubectl  # Installs the 'kubectl' component for interacting with Kubernetes clusters.
 
-    - name: Get GKE credentials
-      run: |
-        gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.CLUSTER_ZONE }} --project ${{ secrets.PROJECT_ID }}
+#     - name: Get GKE credentials
+#       run: |
+#         gcloud container clusters get-credentials ${{ secrets.CLUSTER_NAME }} --zone ${{ secrets.CLUSTER_ZONE }} --project ${{ secrets.PROJECT_ID }}
 
-    - name: Set up Helm
-      run: |
-        curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
+#     - name: Set up Helm
+#       run: |
+#         curl https://raw.githubusercontent.com/helm/helm/master/scripts/get-helm-3 | bash
 
-    - name: Deploy cert-manager using Helm
-      run: |
-        helm repo add jetstack https://charts.jetstack.io
-        helm repo update
-        helm upgrade --install cert-manager jetstack/cert-manager \
-          --namespace cert-manager --create-namespace \
-          --version v1.15.3 --set crds.enabled=true
+#     - name: Deploy cert-manager using Helm
+#       run: |
+#         helm repo add jetstack https://charts.jetstack.io
+#         helm repo update
+#         helm upgrade --install cert-manager jetstack/cert-manager \
+#           --namespace cert-manager --create-namespace \
+#           --version v1.15.3 --set crds.enabled=true
 
-    - name: Deploy ArgoCD using Helm
-      run: |
-        helm repo add argo https://argoproj.github.io/argo-helm
-        helm repo update
-        helm upgrade --install argocd argo/argo-cd \
-          --namespace argocd --create-namespace \
-          --version 5.24.0
+#     - name: Deploy ArgoCD using Helm
+#       run: |
+#         helm repo add argo https://argoproj.github.io/argo-helm
+#         helm repo update
+#         helm upgrade --install argocd argo/argo-cd \
+#           --namespace argocd --create-namespace \
+#           --version 5.24.0
 
-    - name: Deploy NGINX Ingress Controller using Helm
-      run: |
-        helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
-        helm repo update
-        helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
-          --namespace ingress-nginx --create-namespace
+#     - name: Deploy NGINX Ingress Controller using Helm
+#       run: |
+#         helm repo add ingress-nginx https://kubernetes.github.io/ingress-nginx
+#         helm repo update
+#         helm upgrade --install ingress-nginx ingress-nginx/ingress-nginx \
+#           --namespace ingress-nginx --create-namespace
 
-    - name: Deploy EXTERNAL-DNS using Helm
-      run: |
-        helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
-        helm repo update
-        helm upgrade --install external-dns external-dns/external-dns \
-          --namespace external-dns --create-namespace
+#     - name: Deploy EXTERNAL-DNS using Helm
+#       run: |
+#         helm repo add external-dns https://kubernetes-sigs.github.io/external-dns/
+#         helm repo update
+#         helm upgrade --install external-dns external-dns/external-dns \
+#           --namespace external-dns --create-namespace
 
-    - name: Install ArgoCD Applications
-      run:  |
-        kubectl apply -f argo-apps/ -n argocd
+#     - name: Install ArgoCD Applications
+#       run:  |
+#         kubectl apply -f argo-apps/ -n argocd
 
-    - name: Monitor Resources
-      run: |
-        kubectl get all --namespace cert-manager
-        kubectl get all --namespace argocd
-        kubectl get all --namespace ingress-nginx
-        kubectl get svc --namespace argocd
-        kubectl get ingress --namespace argocd
+#     - name: Monitor Resources
+#       run: |
+#         kubectl get all --namespace cert-manager
+#         kubectl get all --namespace argocd
+#         kubectl get all --namespace ingress-nginx
+#         kubectl get svc --namespace argocd
+#         kubectl get ingress --namespace argocd
 
-    - name: Rollback on Failure
-      if: failure()
-      run: |
-        echo "Deployment failed. Rolling back..."
-        helm rollback cert-manager --namespace cert-manager
-        helm rollback argocd --namespace argocd
-        helm rollback ingress-nginx --namespace ingress-nginx
+#     - name: Rollback on Failure
+#       if: failure()
+#       run: |
+#         echo "Deployment failed. Rolling back..."
+#         helm rollback cert-manager --namespace cert-manager
+#         helm rollback argocd --namespace argocd
+#         helm rollback ingress-nginx --namespace ingress-nginx
 
-    - name: Notify on Success
-      if: success()
-      run: echo "Deployment successful!"
+#     - name: Notify on Success
+#       if: success()
+#       run: echo "Deployment successful!"
 
-    - name: Notify on Failure
-      if: failure()
-      run: echo "Deployment failed!"
+#     - name: Notify on Failure
+#       if: failure()
+#       run: echo "Deployment failed!"
