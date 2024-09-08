@@ -21,7 +21,7 @@ spec:
     spec:
       containers:
         - name: aitdevops-site
-          image: "aitdevops.azurecr.io/frontend:latest"  # Uses the 'latest' tag
+          image: "aitdevops.azurecr.io/frontend:20240908220846"
           ports:
             - containerPort: 80
           livenessProbe:
