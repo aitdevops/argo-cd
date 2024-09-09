@@ -65,7 +65,7 @@ jobs:
 
     - name: Install ArgoCD Applications
       run: |
-        kubectl apply -f azure/frontend/ -n argocd
+        kubectl apply -f azure/frontend/ -n frontend
 
     # - name: Monitor Resources
     #   run: |
