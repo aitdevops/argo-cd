@@ -65,28 +65,28 @@ jobs:
 
     - name: Install ArgoCD Applications
       run: |
-        kubectl apply -f argo-apps/ -n argocd
+        kubectl apply -f azure/frontend/ -n argocd
 
-    - name: Monitor Resources
-      run: |
-        kubectl get all --namespace cert-manager
-        kubectl get all --namespace argocd
-        kubectl get all --namespace ingress-nginx
-        kubectl get svc --namespace argocd
-        kubectl get ingress --namespace argocd
+    # - name: Monitor Resources
+    #   run: |
+    #     kubectl get all --namespace cert-manager
+    #     kubectl get all --namespace argocd
+    #     kubectl get all --namespace ingress-nginx
+    #     kubectl get svc --namespace argocd
+    #     kubectl get ingress --namespace argocd
 
-    - name: Rollback on Failure
-      if: failure()
-      run: |
-        echo "Deployment failed. Rolling back..."
-        helm rollback cert-manager --namespace cert-manager
-        helm rollback argocd --namespace argocd
-        helm rollback ingress-nginx --namespace ingress-nginx
+    # - name: Rollback on Failure
+    #   if: failure()
+    #   run: |
+    #     echo "Deployment failed. Rolling back..."
+    #     helm rollback cert-manager --namespace cert-manager
+    #     helm rollback argocd --namespace argocd
+    #     helm rollback ingress-nginx --namespace ingress-nginx
 
-    - name: Notify on Success
-      if: success()
-      run: echo "Deployment successful!"
+    # - name: Notify on Success
+    #   if: success()
+    #   run: echo "Deployment successful!"
 
-    - name: Notify on Failure
-      if: failure()
-      run: echo "Deployment failed!"
+    # - name: Notify on Failure
+    #   if: failure()
+    #   run: echo "Deployment failed!"
